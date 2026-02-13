@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+    <h1>商品一覧</h1>
+
+    <div th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form method="post" action="/products">
+        <label>名前: <input type="text" name="name" required ></label>
+        <label>価格: <input type="number" name="price" min="0" required /></label>
+        <button type="submit">登録</button>
+    </form>
+
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>価格</th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td>
+                    <form method="post" th:action="@{/products/{id}/delete(id=${product.id})}">
+                        <button type="submit">削除</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><a href="/dashboard">Dashboard</a></p>
+
+</body>
+</html>
